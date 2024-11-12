@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminencuesta360
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: adminencuesta360
+  template:
+    metadata:
+      labels:
+        app: adminencuesta360
+    spec:
+      containers:
+        - name: adminencuesta360
+          image: adminencuesta360:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminencuesta360-balancer
+spec:
+  selector:
+    app: adminencuesta360
+  ports:
+    - protocol: TCP
+      port: 8000 # The port to expose to the outside
+      targetPort: 8080 # The port the application is running on in the pods
+  type: LoadBalancer
+  sessionAffinity: ClientIP
