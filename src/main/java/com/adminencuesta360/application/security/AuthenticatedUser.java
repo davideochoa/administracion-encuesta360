@@ -3,10 +3,11 @@ package com.adminencuesta360.application.security;
 import com.adminencuesta360.application.data.User;
 import com.adminencuesta360.application.data.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
-import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Component
 public class AuthenticatedUser {
