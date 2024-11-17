@@ -99,6 +99,13 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version> <!-- Cambia la versión si es necesario -->
+        </dependency>
+
     </dependencies>
 
     <build>
