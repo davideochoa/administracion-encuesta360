@@ -1,7 +1,7 @@
 package com.adminencuesta360.application.security;
 
-import com.adminencuesta360.application.data.User;
-import com.adminencuesta360.application.data.UserRepository;
+import com.adminencuesta360.application.data.entity.UsuarioEntity;
+import com.adminencuesta360.application.data.repository.UsuarioRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,33 +10,39 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailsServiceImpl(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        UsuarioEntity user = usuarioRepository.findByNombreUsuario(username);
         if (user == null) {
             throw new UsernameNotFoundException("No user present with username: " + username);
         } else {
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getHashedPassword(),
+            return new org.springframework.security.core.userdetails.User(user.getNombreUsuario(), user.getPassword(),
                     getAuthorities(user));
         }
     }
 
-    private static List<GrantedAuthority> getAuthorities(User user) {
-        return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toList());
+    private static List<GrantedAuthority> getAuthorities(UsuarioEntity user) {
+        List<GrantedAuthority> roles = new ArrayList<>();
+
+        if(user.getEsAdministrador())
+            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        else
+            roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        return roles;
 
     }
 
