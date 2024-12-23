@@ -1,8 +1,4 @@
 steps:
-  - name: 'maven:3.8-jdk-11'
-    entrypoint: 'mvn'
-    args: [ '-Pproduction','package' ]
-
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/encuesta360-440514/my-app', '.']
 
