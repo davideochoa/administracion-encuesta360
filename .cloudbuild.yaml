@@ -3,9 +3,12 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'gcr.io/encuesta360-440514/api-encuesta'
+      - 'gcr.io/mi-proyecto/mi-imagen'
       - '.'
+
 options:
-  logging: NONE
-images:
-  - 'gcr.io/encuesta360-440514/api-encuesta'
+  logging: CLOUD_STORAGE
+
+build:
+  service_account: 'mi-cuenta-de-servicio@mi-proyecto.iam.gserviceaccount.com'
+  logs_bucket: 'gs://bucket-encuesta360'
