@@ -1,5 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/encuesta360-440514/admin-encuesta360p:dev', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/admin-encuesta360p:dev', '.']
 images:
-  - 'gcr.io/encuesta360-440514/admin-encuesta360p:dev'
+  - 'gcr.io/$PROJECT_ID/admin-encuesta360p:dev'
