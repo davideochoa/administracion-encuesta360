@@ -5,5 +5,7 @@ steps:
       - '-t'
       - 'gcr.io/encuesta360-440514/api-encuesta'
       - '.'
+options:
+  logging: NONE
 images:
   - 'gcr.io/encuesta360-440514/api-encuesta'
